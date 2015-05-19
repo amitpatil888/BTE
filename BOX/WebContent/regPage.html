@@ -1,0 +1,265 @@
+
+<html><head>
+<meta content="text/html; charset=ISO-8859-1" http-equiv="content-type"><title>Registeration Page</title>
+
+<style>
+div.background{
+background: url(D:\boxforfood\bte_cropped.jpg) repeat;
+opacity: 0.8;
+filter: alpha(opacity=80); /* For IE8 and earlier */
+}
+div.information{
+margin: 5%;
+font-weight: bold;
+color: #000000;
+}
+</style>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<script>
+	
+	
+	
+	function submitForm(){
+		alert('click function');
+		var imgElem = $('#imageFile').val();
+		alert(imgElem);
+		alert('click function');
+		var imgData = JSON.stringify(getBase64Image(imgElem));
+		
+		alert(imgData);
+		  $.ajax({
+		  url: 'http://url.com/rest/api',
+		  dataType: 'json',
+		  data: imgData,
+		  type: 'POST',
+		  success: function(data) {
+		    console.log(data);
+		    }
+		  });
+		}
+	
+	function getBase64Image(imgElem) {
+		// imgElem must be on the same server otherwise a cross-origin error will be thrown "SECURITY_ERR: DOM Exception 18"
+		    var canvas = document.createElement("canvas");
+		    canvas.width = imgElem.clientWidth;
+		    canvas.height = imgElem.clientHeight;
+		    var ctx = canvas.getContext("2d");
+		    ctx.drawImage(imgElem, 0, 0);
+		    var dataURL = canvas.toDataURL("image/png");
+		    return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+		}
+	
+	(function () {
+		var filesUpload = document.getElementById("files-upload"),
+			dropArea = document.getElementById("drop-area"),
+			fileList = document.getElementById("file-list");
+			
+		function uploadFile (file) {
+			var li = document.createElement("li"),
+				div = document.createElement("div"),
+				img,
+				progressBarContainer = document.createElement("div"),
+				progressBar = document.createElement("div"),
+				reader,
+				xhr,
+				fileInfo;
+				
+			li.appendChild(div);
+			
+			progressBarContainer.className = "progress-bar-container";
+			progressBar.className = "progress-bar";
+			progressBarContainer.appendChild(progressBar);
+			li.appendChild(progressBarContainer);
+			
+			/*
+				If the file is an image and the web browser supports FileReader,
+				present a preview in the file list
+			*/
+			if (typeof FileReader !== "undefined" && (/image/i).test(file.type)) {
+				img = document.createElement("img");
+				li.appendChild(img);
+				reader = new FileReader();
+				reader.onload = (function (theImg) {
+					return function (evt) {
+						theImg.src = evt.target.result;
+					};
+				}(img));
+				reader.readAsDataURL(file);
+			}
+			
+			// Uploading - for Firefox, Google Chrome and Safari
+			xhr = new XMLHttpRequest();
+			
+			// Update progress bar
+			xhr.upload.addEventListener("progress", function (evt) {
+				if (evt.lengthComputable) {
+					progressBar.style.width = (evt.loaded / evt.total) * 100 + "%";
+				}
+				else {
+					// No data to calculate on
+				}
+			}, false);
+			
+			// File uploaded
+			xhr.addEventListener("load", function () {
+				progressBarContainer.className += " uploaded";
+				progressBar.innerHTML = "Uploaded!";
+			}, false);
+
+			xhr.open("post", "upload/upload.php", true);
+			
+			// Set appropriate headers
+			xhr.setRequestHeader("Content-Type", "multipart/form-data");
+			xhr.setRequestHeader("X-File-Name", file.name);
+			xhr.setRequestHeader("X-File-Size", file.size);
+			xhr.setRequestHeader("X-File-Type", file.type);
+
+			// Send the file (doh)
+			xhr.send(file);
+			
+			// Present file info and append it to the list of files
+			fileInfo = "<div><strong>Name:</strong> " + file.name + "</div>";
+			fileInfo += "<div><strong>Size:</strong> " + parseInt(file.size / 1024, 10) + " kb</div>";
+			fileInfo += "<div><strong>Type:</strong> " + file.type + "</div>";
+			div.innerHTML = fileInfo;
+			
+			fileList.appendChild(li);
+		}
+		
+		function traverseFiles (files) {
+			if (typeof files !== "undefined") {
+				for (var i=0, l=files.length; i<l; i++) {
+					uploadFile(files[i]);
+				}
+			}
+			else {
+				fileList.innerHTML = "No support for the File API in this web browser";
+			}	
+		}
+		
+		filesUpload.addEventListener("change", function () {
+			traverseFiles(this.files);
+		}, false);
+		
+		dropArea.addEventListener("dragleave", function (evt) {
+			var target = evt.target;
+			
+			if (target && target === dropArea) {
+				this.className = "";
+			}
+			evt.preventDefault();
+			evt.stopPropagation();
+		}, false);
+		
+		dropArea.addEventListener("dragenter", function (evt) {
+			this.className = "over";
+			evt.preventDefault();
+			evt.stopPropagation();
+		}, false);
+		
+		dropArea.addEventListener("dragover", function (evt) {
+			evt.preventDefault();
+			evt.stopPropagation();
+		}, false);
+		
+		dropArea.addEventListener("drop", function (evt) {
+			traverseFiles(evt.dataTransfer.files);
+			this.className = "";
+			evt.preventDefault();
+			evt.stopPropagation();
+		}, false);										
+	})();	
+
+	
+	
+	
+	
+	</script>
+</head>
+<body>
+<div class="background">
+<form style="font-family: Courier New,Courier,monospace; font-weight: bold;" enctype="multipart/form-data" method="post" action="//self" name="chef registraion">
+<table style="text-align: left; width: 1042px; height: 452px;" border="0" cellpadding="2" cellspacing="2">
+<tbody>
+<tr>
+<td>
+</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="width: 25%;" colspan="1" rowspan="10"></td>
+<td></td>
+<td></td>
+<td style="width: 25%;" colspan="1" rowspan="10"></td>
+</tr>
+
+<tr>
+<td><font size="+1">Username</font></td>
+<td><font size="+1"><input size="50" name="username"></font></td>
+</tr>
+<tr>
+<td><font size="+1">Name</font></td>
+<td><font size="+1"><input size="50" name="name"></font></td>
+</tr>
+<tr>
+<td><font size="+1">Address Line 1</font></td>
+<td><font size="+1"><input size="50" name="addressline1"></font></td>
+</tr>
+<tr>
+<td><font size="+1">Address Line 2</font></td>
+<td><font size="+1"><input size="50" name="addressline2"></font></td>
+</tr>
+<tr>
+<td><font size="+1">City</font></td>
+<td><font size="+1"><input size="50" name="city"></font></td>
+</tr>
+<tr>
+<td><font size="+1">State</font></td>
+<td><font size="+1"><input size="50" name="state"></font></td>
+</tr>
+<tr>
+<td style="font-family: Courier New,Courier,monospace;"><font size="+1">ZipCode</font></td>
+<td><font size="+1"><input size="10" name="zip"></font></td>
+</tr>
+<tr>
+<td><font size="+1">Avataar</font></td>
+<td><font size="+1"><input id="imageFile" name="avataar" type="file"></font>
+<h3>Choose file(s)</h3>
+<p>
+<input id="files-upload" type="file" multiple>
+</p>
+<p id="drop-area">
+<span class="drop-instructions">or drag and drop files here</span>
+<span class="drop-over">Drop files here!</span>
+</p>
+<ul id="file-list">
+<li class="no-items">(no files uploaded yet)</li>
+</ul>
+</td>
+</tr>
+
+</tbody>
+</table>
+</form>
+</div>
+<font style="font-weight: bold;" size="+1"><br style="font-family: Courier New,Courier,monospace;">
+</font>
+<table style="text-align: left; width: 100%;" border="0" cellpadding="2" cellspacing="2">
+<tbody>
+<tr>
+<td style="width: 33%;"></td>
+<td style="width: 34px; text-align: center; vertical-align: middle;"><font size="+1">
+<input  id="registerButton" value="Register" type="submit" onclick="alert('hello000');submitForm();"></font></td>
+<td style="width: 33%;"></td>
+</tr>
+</tbody>
+</table>
+</body></html>

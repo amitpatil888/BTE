@@ -1,0 +1,22 @@
+div.wrapper{
+	float:center; /* important */
+	position:relative; /* important(so we can absolutely position the description div */
+}
+div.description{
+	align:right;
+	position:absolute; /* absolute position (so we can position it where we want)*/
+	bottom:10%; /* position will be on bottom */
+	left:100px;
+	width:100%;
+	/* styling bellow 
+	background-color:black;*/
+	font-family: 'tahoma';
+	font-size:35px;
+	color:white;
+	opacity:0.6; /* transparency */
+	filter:alpha(opacity=60); /* IE transparency */
+}
+p.description_content{
+	padding:10px;
+	margin:0px;
+}
