@@ -15,7 +15,7 @@ public class DatabaseConnector {
 			  
 			//step2 create  the connection object  
 			conn=DriverManager.getConnection(  
-			"jdbc:oracle:thin:@boxfood.cj5mrbp3omds.us-west-1.rds.amazonaws.com:1521:BOXFOOD","cisadm","Tiger@100");  
+			"jdbc:oracle:thin:@boxfood.cj5mrbp3omds.us-west-1.rds.amazonaws.com:1521:BOXFOOD","cisadm","Tiger100");  
 			  
 		}
 		catch(Exception e)
