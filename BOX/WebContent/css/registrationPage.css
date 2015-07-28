@@ -20,3 +20,17 @@ p.description_content{
 	padding:10px;
 	margin:0px;
 }
+body{
+	background-color: #d0e4fe;
+}
+table
+{
+	padding: 20px;
+	margin-top: 5%;
+	margin-left: 25%;
+}
+td {
+    padding: 10px;
+    width:25%;
+     
+}
