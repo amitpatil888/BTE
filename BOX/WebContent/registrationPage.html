@@ -3,49 +3,44 @@
 <meta content="text/html; charset=ISO-8859-1" http-equiv="content-type"><title>Registration Page</title>
 
 <style>
-div.background{
-background: url(D:\boxforfood\bte_cropped.jpg) repeat;
-opacity: 0.8;
-filter: alpha(opacity=80); /* For IE8 and earlier */
-}
-div.information{
-margin: 5%;
-font-weight: bold;
-color: #000000;
-}
+
+
 </style></head>
 <body>
 <div class="background">
 <form style="font-family: Courier New,Courier,monospace; font-weight: bold;" action="rest/chefRegister" method="post" enctype="multipart/form-data" name="chefRegistration">
 <table style="text-align: left; width: 1042px; height: 452px;" border="0" cellpadding="2" cellspacing="2">
 <tbody>
-<tr>
-<td>
-</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td style="width: 25%;" colspan="1" rowspan="10"></td>
-<td></td>
-<td></td>
-<td style="width: 25%;" colspan="1" rowspan="10"></td>
-</tr>
 
+<tr>
+<td style="width: 33%;" colspan="1" rowspan="20"></td>
+<td></td>
+
+<td style="width: 10%;" colspan="1" rowspan="20"></td>
+</tr>
+<tr>
+<td><font size="+1">Email</font></td>
+<td><font size="+1"><input size="50" name="email" type="email"></font></td>
+</tr>
 <tr>
 <td><font size="+1">Username</font></td>
 <td><font size="+1"><input size="50" name="username"></font></td>
 </tr>
 <tr>
-<td><font size="+1">Name</font></td>
-<td><font size="+1"><input size="50" name="name"></font></td>
+<td><font size="+1">Password</font></td>
+<td><font size="+1"><input size="50" name="password" type="password"></font></td>
+</tr>
+<tr>
+<td><font size="+1">Repeat the Password</font></td>
+<td><font size="+1"><input size="50" name="repeatPassword" type="password"></font></td>
+</tr>
+<tr>
+<td><font size="+1">First Name</font></td>
+<td><font size="+1"><input size="50" name="firstName"></font></td>
+</tr>
+<tr>
+<td><font size="+1">Last Name</font></td>
+<td><font size="+1"><input size="50" name="lastName"></font></td>
 </tr>
 <tr>
 <td><font size="+1">Address Line 1</font></td>
@@ -59,6 +54,7 @@ color: #000000;
 <td><font size="+1">City</font></td>
 <td><font size="+1"><input size="50" name="city"></font></td>
 </tr>
+
 <tr>
 <td><font size="+1">State</font></td>
 <td><font size="+1"><input size="50" name="state"></font></td>
@@ -70,20 +66,21 @@ color: #000000;
 </tr>
 <tr>
 <td><font size="+1">Phone number</font></td>
-<td><font size="+1"><input size="50" name="phone"></font></td>
+<td><font size="+1"><input size="50" name="phone" type="tel"></font></td>
 </tr>
 <tr>
 <td><font size="+1">Avataar</font></td>
 <td><font size="+1"><input id="imageFile" name="avataar" type="file"></font></td>
 </tr>
+<tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr>
 <tr>
-<td style="width: 33%;"></td>
-<td style="width: 34px; text-align: center; vertical-align: middle;"><font size="+1">
+<td width="10%">
+<td ><font size="+1">
 <input id="registerButton" value="Register" type="submit"></font></td>
-<td style="width: 33%;"></td>
+<td width="10%"><td>
 </tr>
 </tbody>
-</table><br><a href="uploadKitchenPics.html">Upload your additional kitchen pics</a><br>
+</table>
 </form>
 </div>
 

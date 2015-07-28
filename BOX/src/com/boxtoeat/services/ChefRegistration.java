@@ -1,6 +1,7 @@
 package com.boxtoeat.services;
 import java.io.InputStream;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,13 +33,14 @@ public class ChefRegistration {
     @Consumes(MediaType.MULTIPART_FORM_DATA)
 	 public Response uploadFile(
         @FormDataParam("avataar") InputStream uploadedInputStream,
-        @FormDataParam("avataar") FormDataContentDisposition fileDetail, @FormDataParam("username") String username,
-        @FormDataParam("name") String name , @FormDataParam("addressline1") String addressline1,@FormDataParam("addressline2") String addressline2,
-        @FormDataParam("city") String city , @FormDataParam("state") String state,@FormDataParam("zip") long zip,@FormDataParam("email") String email,@FormDataParam("telephone") long telephone   	
+        @FormDataParam("avataar") FormDataContentDisposition fileDetail, @FormDataParam("email") String email, @FormDataParam("username") String username,
+        @FormDataParam("password") String password,@FormDataParam("firstName") String firstName,
+        @FormDataParam("lastName") String lastName , @FormDataParam("addressline1") String addressline1,@FormDataParam("addressline2") String addressline2,
+        @FormDataParam("city") String city , @FormDataParam("state") String state,@FormDataParam("zip") long zip,@FormDataParam("telephone") long telephone   	
     		) {
 			System.out.println("Hellow");
 			// save it
-			writeToDB(uploadedInputStream, fileDetail,username,name,addressline1,addressline2,city,zip,state,email,telephone);
+			writeToDB(uploadedInputStream, fileDetail,username,password,firstName,lastName,addressline1,addressline2,city,zip,state,email,telephone);
 			addPhoneverification(username, telephone);
 			addEmailverification(username,email);
 
@@ -47,26 +49,28 @@ public class ChefRegistration {
 	
 	
 	private void writeToDB(InputStream uploadedInputStream,FormDataContentDisposition fileDetail,
-			String username,String name,String addressline1,String addressline2,String city,long zip,String state,String email,long telephone) {
+			String username,String password,String firstName,String lastName,String addressline1,String addressline2,String city,long zip,String state,String email,long telephone) {
 
 		try {
 			
 			DatabaseConnector dbConn=new DatabaseConnector();
 			Connection conn=dbConn.getConnection();
 			
-			String stmt="INSERT INTO CHEF_PROFILE (USERNAME, NAME, ADDRESS_LINE_1,ADDRESS_LINE_2,CITY,ZIP,EMAIL,TELEPHONE,VERIFIED_FLG,PROFILE_PIC) VALUES (?,?,?,?,?,?,?,?,?,?)";
+			String stmt="INSERT INTO VITALS (USERNAME, FIRST_NAME, LAST_NAME,EMAIL,TELEPHONE,ADDRESS_LINE1,ADDRESS_LINE2,CITY,ZIP,COUNTRY,CREATE_DTTM,AVATAAR) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
 			
 			PreparedStatement ps=conn.prepareStatement(stmt);
 			ps.setString(1, username);
-			ps.setString(2, name);
-			ps.setString(3, addressline1);
-			ps.setString(4, addressline2);
-			ps.setString(5, city);
-			ps.setLong(6, zip);
-			ps.setString(7, email);
-			ps.setLong(8, telephone);
-			ps.setString(9, "N");
-			ps.setBinaryStream(10, uploadedInputStream);
+			ps.setString(2, firstName);
+			ps.setString(3, lastName);
+			ps.setString(4, email);
+			ps.setLong(5, telephone);
+			ps.setString(6, addressline1);
+			ps.setString(7, addressline2);
+			ps.setString(8, city);
+			ps.setLong(9, zip);
+			ps.setString(10, "USA");
+			ps.setDate(11, new Date(System.currentTimeMillis()));
+			ps.setBinaryStream(12, uploadedInputStream);
 			
 			int count = ps.executeUpdate();
 			ps.close();
@@ -100,15 +104,15 @@ public class ChefRegistration {
 		ps.setString(2, "USA");
 		ps.setLong(3, telephone);
 		ps.setLong(4, random);
-		
-//		int count = ps.executeUpdate();
+		ps.setDate(5, new Date(System.currentTimeMillis()));
+		int count = ps.executeUpdate();
 		ps.close();
 		
 		 TwilioRestClient client = new TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN);
 		
 		    List<NameValuePair> params = new ArrayList<NameValuePair>();
-		    params.add(new BasicNameValuePair("Body", "Pukki ki mummy !!I love you!!!"));
-		    params.add(new BasicNameValuePair("To", "+14088967826"));
+		    params.add(new BasicNameValuePair("Body", "Aloha !! Your box to eat verification code is "+random+".This token will expire after 24 hours."));
+		    params.add(new BasicNameValuePair("To", "+19253535182"));
 		    params.add(new BasicNameValuePair("From", "+14695182382"));
 		  
 		     
