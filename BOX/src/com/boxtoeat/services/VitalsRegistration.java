@@ -19,6 +19,7 @@ import javax.ws.rs.core.Response;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
+import com.boxtoeat.helper.LoginHelper;
 import com.boxtoeat.helper.PhoneVerificationCodeHelper;
 import com.boxtoeat.jdbc.DatabaseConnector;
 import com.sun.jersey.core.header.FormDataContentDisposition;
@@ -42,7 +43,8 @@ public class VitalsRegistration {
     		) {
 			
 			// save it to the database
-			writeToDB(uploadedInputStream, fileDetail,username,password,firstName,lastName,addressline1,addressline2,city,zip,state,email,telephone);
+			writeToDB(uploadedInputStream, fileDetail,username,firstName,lastName,addressline1,addressline2,city,zip,state,email,telephone);
+			addLoginInformation(username,password);
 			addPhoneverification(username, telephone);
 			addEmailverification(username,email);
 			try
@@ -60,7 +62,7 @@ public class VitalsRegistration {
 	
 	
 	private void writeToDB(InputStream uploadedInputStream,FormDataContentDisposition fileDetail,
-			String username,String password,String firstName,String lastName,String addressline1,String addressline2,String city,long zip,String state,String email,long telephone) {
+			String username,String firstName,String lastName,String addressline1,String addressline2,String city,long zip,String state,String email,long telephone) {
 
 		try {
 			
@@ -83,7 +85,7 @@ public class VitalsRegistration {
 			ps.setDate(11, new Date(System.currentTimeMillis()));
 			ps.setBinaryStream(12, uploadedInputStream);
 			
-			int count = ps.executeUpdate();
+			ps.executeUpdate();
 			ps.close();
 			
 			
@@ -99,7 +101,10 @@ public class VitalsRegistration {
 	{
 		
 	}
-	
+	private void addLoginInformation(String username,String password)
+	{
+		new LoginHelper().saveLoginInformation(username, password);
+	}
 	
 	
 	private void addPhoneverification(String username,long telephone)
