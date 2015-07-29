@@ -3,8 +3,67 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Verify Phone</title>
-</head>
-<body>
+<link rel="stylesheet" type="text/css" href="css/verifyPhone.css">
+<script>
+function getURLParameter(sParam)
 
+{
+    var sPageURL = window.location.search.substring(1);
+    var sURLVariables = sPageURL.split('&');
+    for (var i = 0; i < sURLVariables.length; i++)
+    {
+        var sParameterName = sURLVariables[i].split('=');
+        if (sParameterName[0] == sParam)
+        {
+            return sParameterName[1];
+        }
+    }
+}
+function populatePhoneNumber()
+{
+	var tel=getURLParameter('tel');
+	document.getElementById("telephone").value=tel;
+}
+
+function performAction(object)
+{
+	var actionType=object.name;
+	alert(actionType);
+	document.getElementById("actionType").value=actionType;
+}
+</script>
+</head>
+<body onload="populatePhoneNumber();">
+<form action="rest/phoneVerify" method="post" enctype="multipart/form-data" name="phoneVerify">
+<table class="maintable">
+<tr>
+<td class="instructions">Please verify your phone number</td>
+</tr>
+<tr><td>
+<table class="hiddenTable"><tr><td>Phone number</td><td><input class="verifycodeStyle"  id="telephone" name="telephone"></td></tr></table>
+<table class="hiddenTable"><tr><td>Action Type</td><td><input class="verifycodeStyle"  id="actionType" name="actionType"></td></tr></table>
+</td>
+</tr>
+<tr>
+<td>
+<table class="innertable"><tr>
+<td class="instructionsVerify">Enter your verification code</td>
+<td><input class="verifycodeStyle" size="1" type="number" maxlength="1" min="0" max="9" name="code1"></td>
+<td><input class="verifycodeStyle" size="1" type="number" maxlength="1" min="0" max="9" name="code2"></td>
+<td><input class="verifycodeStyle" size="1" type="number" maxlength="1" min="0" max="9" name="code3"></td>
+<td><input class="verifycodeStyle" size="1" type="number" maxlength="1" min="0" max="9" name="code4"></td>
+<td><input class="verifycodeStyle" size="1" type="number" maxlength="1" min="0" max="9" name="code5"></td>
+<td><input class="verifycodeStyle" size="1" type="number" maxlength="1" min="0" max="9" name="code6"></td>
+
+<td><input type="button" value="Verify" size="20" name="verify" onclick="performAction(this);"></td>
+</tr></table>
+</td>
+</tr>
+<tr>
+<td class="instructions"><input type="button" value="Resend the code" size="20" name="resend" onclick="performAction(this);"></td>
+</tr>
+
+</table>
+</form>
 </body>
 </html>

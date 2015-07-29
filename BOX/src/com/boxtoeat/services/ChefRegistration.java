@@ -1,5 +1,6 @@
 package com.boxtoeat.services;
 import java.io.InputStream;
+import java.net.URI;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -7,9 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import javax.servlet.http.HttpSession;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -36,15 +39,24 @@ public class ChefRegistration {
         @FormDataParam("avataar") FormDataContentDisposition fileDetail, @FormDataParam("email") String email, @FormDataParam("username") String username,
         @FormDataParam("password") String password,@FormDataParam("firstName") String firstName,
         @FormDataParam("lastName") String lastName , @FormDataParam("addressline1") String addressline1,@FormDataParam("addressline2") String addressline2,
-        @FormDataParam("city") String city , @FormDataParam("state") String state,@FormDataParam("zip") long zip,@FormDataParam("telephone") long telephone   	
+        @FormDataParam("city") String city , @FormDataParam("state") String state,@FormDataParam("zip") long zip,@FormDataParam("phone") long telephone   	
     		) {
-			System.out.println("Hellow");
+			System.out.println("Hellow"+telephone);
 			// save it
 			writeToDB(uploadedInputStream, fileDetail,username,password,firstName,lastName,addressline1,addressline2,city,zip,state,email,telephone);
-			addPhoneverification(username, telephone);
+//			addPhoneverification(username, telephone);
 			addEmailverification(username,email);
-
-		return Response.status(200).entity("registration successful").build();
+			try
+			{
+				String urlString="http://localhost:8080/BOX/verifyPhone.html?tel="+Long.toString(telephone);
+				System.out.println(urlString);
+            return Response.seeOther(new URI(urlString)).build();
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+			}
+            return Response.status(200).entity("registration failure").build();
     }
 	
 	
