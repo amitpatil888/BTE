@@ -9,6 +9,8 @@ import java.sql.Statement;
 import javax.xml.bind.DatatypeConverter;
 
 import com.boxtoeat.jdbc.DatabaseConnector;
+import com.sendgrid.SendGrid;
+import com.sendgrid.SendGrid.Email;
 
 public class EmailVerificationCodeHelper {
 
@@ -36,11 +38,25 @@ public class EmailVerificationCodeHelper {
 				
 
 				ps = conn
-						.prepareStatement("INSERT INTO LOGIN_DETAILS (USERNAME, EMAIL, RANDOM_CODE) VALUES (?,?,?)");
+						.prepareStatement("INSERT INTO EMAIL_VERIFY_LIST (USERNAME, EMAIL, RANDOM_CODE) VALUES (?,?,?)");
 				ps.setString(1, username);
 				ps.setString(2, email);
 				ps.setString(3, sDigest);
 				ps.executeUpdate();
+				
+				
+				
+				SendGrid sendgrid = new SendGrid("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");
+				Email emailObj = new Email();
+				emailObj.addTo("nupurg80@gmail.com");
+				emailObj.addToName("Amit");
+				emailObj.setFrom("verify-email@boxtoeat.com");
+				emailObj.setSubject("Please verify your email address");
+				emailObj.setFromName("Pati Pameshwar");
+				emailObj.setText("Please click the following link to verify your email address : http://localhost:8080/BOX/rest/emailVerify?email="+email+"&code="+sDigest);
+				
+				sendgrid.send(emailObj);
+				
 				return true;
 			} else {
 				return false;

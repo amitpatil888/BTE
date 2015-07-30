@@ -19,6 +19,7 @@ import javax.ws.rs.core.Response;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
+import com.boxtoeat.helper.EmailVerificationCodeHelper;
 import com.boxtoeat.helper.LoginHelper;
 import com.boxtoeat.helper.PhoneVerificationCodeHelper;
 import com.boxtoeat.jdbc.DatabaseConnector;
@@ -97,9 +98,9 @@ public class VitalsRegistration {
 
 	}
 	
-	private void addEmailverification(String username,String telephone)
+	private void addEmailverification(String username,String email)
 	{
-		
+		new EmailVerificationCodeHelper().saveEmailVerifactionCode(username, email);
 	}
 	private void addLoginInformation(String username,String password)
 	{
