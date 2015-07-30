@@ -70,7 +70,7 @@ public class VitalsRegistration {
 			DatabaseConnector dbConn=new DatabaseConnector();
 			Connection conn=dbConn.getConnection();
 			
-			String stmt="INSERT INTO VITALS (USERNAME, FIRST_NAME, LAST_NAME,EMAIL,TELEPHONE,ADDRESS_LINE1,ADDRESS_LINE2,CITY,ZIP,COUNTRY,CREATE_DTTM,AVATAAR) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+ 			String stmt="INSERT INTO VITALS (USERNAME, FIRST_NAME, LAST_NAME,EMAIL,TELEPHONE,ADDRESS_LINE1,ADDRESS_LINE2,CITY,ZIP,COUNTRY,CREATE_DTTM,AVATAAR) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
 			
 			PreparedStatement ps=conn.prepareStatement(stmt);
 			ps.setString(1, username);

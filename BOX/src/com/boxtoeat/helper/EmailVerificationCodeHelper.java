@@ -48,12 +48,12 @@ public class EmailVerificationCodeHelper {
 				
 				SendGrid sendgrid = new SendGrid("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");
 				Email emailObj = new Email();
-				emailObj.addTo("nupurg80@gmail.com");
+				emailObj.addTo(email);
 				emailObj.addToName("Amit");
 				emailObj.setFrom("verify-email@boxtoeat.com");
 				emailObj.setSubject("Please verify your email address");
 				emailObj.setFromName("Pati Pameshwar");
-				emailObj.setText("Please click the following link to verify your email address : http://localhost:8080/BOX/rest/emailVerify?email="+email+"&code="+sDigest);
+				emailObj.setText("Please click the following link to verify your email address : http://localhost:8080/BOX/rest/emailVerify?email="+email+"&verificationCode="+sDigest);
 				
 				sendgrid.send(emailObj);
 				
