@@ -36,6 +36,8 @@ public class EmailVerificationCodeHelper {
 				byte[] bDigest = getHash(ITERATION_NUMBER, email, bSalt);
 				String sDigest = DatatypeConverter.printBase64Binary(bDigest);
 				
+				
+				sDigest = sDigest.replaceAll("[^a-zA-Z0-9]","");
 
 				ps = conn
 						.prepareStatement("INSERT INTO EMAIL_VERIFY_LIST (USERNAME, EMAIL, RANDOM_CODE) VALUES (?,?,?)");
